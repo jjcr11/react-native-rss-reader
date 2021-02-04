@@ -1,9 +1,9 @@
 import React from 'react';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
-import Item from './item';
+import ItemFeedList from './itemFeedList';
 
-class TitleList extends React.Component {
+class FeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +23,15 @@ class TitleList extends React.Component {
           loading: false,
         });
       });
+    //console.log(typeof this.state.data);
   }
   render() {
     const renderItem = ({item}) => (
-      <Item rss={item} navigation={this.state.navigation} />
+      <ItemFeedList
+        rss={item}
+        navigation={this.state.navigation}
+        datos={this.state.data}
+      />
     );
     this.getData();
     if (this.state.loading) {
@@ -41,4 +46,4 @@ class TitleList extends React.Component {
   }
 }
 
-export default TitleList;
+export default FeedList;

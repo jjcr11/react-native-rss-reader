@@ -1,23 +1,24 @@
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 
-class Item extends React.Component {
+class ItemFeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dato: props.rss,
       navigation: props.navigation,
+      datos: props.datos,
     };
+    //console.log(this.state.datos[0]);
   }
   render() {
     return (
       <View>
         <TouchableOpacity
           onPress={() =>
-            this.state.navigation.navigate('DetailsScreen', {
-              itemId: 86,
-              otherParam: 'anything you want here',
-              algo: this.state.dato.description,
+            this.state.navigation.navigate('New', {
+              rss: this.state.dato,
+              datos: this.state.datos,
             })
           }>
           <Text>{this.state.dato.title + '\n'}</Text>
@@ -27,4 +28,4 @@ class Item extends React.Component {
   }
 }
 
-export default Item;
+export default ItemFeedList;
