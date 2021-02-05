@@ -3,6 +3,18 @@ import {FlatList, Text, View} from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
 import ItemFeedList from './itemFeedList';
 
+const json = [
+  {
+    link: 'https://www.mientrastantoenmexico.mx/feed/',
+  },
+  {
+    link: 'https://kotaku.com/rss',
+  },
+  {
+    link: 'http://feeds.weblogssl.com/xatakamx',
+  },
+];
+
 class FeedList extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +25,20 @@ class FeedList extends React.Component {
     };
   }
   getData() {
-    //fetch('http://feeds.weblogssl.com/xatakamx')
+    json.forEach((link, index) => {
+      console.log(link);
+      fetch(link.link)
+        .then((response) => response.text())
+        .then((responseData) => rssParser.parse(responseData))
+        .then((rss) => {
+          this.setState({
+            data: this.state.data.concat(rss.items),
+            loading: false,
+          });
+        });
+    });
+
+    /*
     fetch('https://kotaku.com/rss')
       .then((response) => response.text())
       .then((responseData) => rssParser.parse(responseData))
@@ -23,10 +48,11 @@ class FeedList extends React.Component {
           loading: false,
         });
       });
+      */
   }
   render() {
-    this.getData();
     if (this.state.loading) {
+      this.getData();
       return <Text>CARGANDO</Text>;
     } else {
       return (
