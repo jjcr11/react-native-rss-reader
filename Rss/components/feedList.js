@@ -23,23 +23,25 @@ class FeedList extends React.Component {
           loading: false,
         });
       });
-    //console.log(typeof this.state.data);
   }
   render() {
-    const renderItem = ({item}) => (
-      <ItemFeedList
-        rss={item}
-        navigation={this.state.navigation}
-        datos={this.state.data}
-      />
-    );
     this.getData();
     if (this.state.loading) {
       return <Text>CARGANDO</Text>;
     } else {
       return (
         <View style={{flex: 1, padding: 24}}>
-          <FlatList data={this.state.data} renderItem={renderItem} />
+          <FlatList
+            data={this.state.data}
+            renderItem={(item) => (
+              <ItemFeedList
+                rss={item}
+                index={item.index}
+                navigation={this.state.navigation}
+                datos={this.state.data}
+              />
+            )}
+          />
         </View>
       );
     }

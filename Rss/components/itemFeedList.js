@@ -5,11 +5,11 @@ class ItemFeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dato: props.rss,
+      rss: props.rss,
       navigation: props.navigation,
       datos: props.datos,
+      index: props.index,
     };
-    //console.log(this.state.datos[0]);
   }
   render() {
     return (
@@ -17,11 +17,12 @@ class ItemFeedList extends React.Component {
         <TouchableOpacity
           onPress={() =>
             this.state.navigation.navigate('New', {
-              rss: this.state.dato,
+              rss: this.state.rss,
               datos: this.state.datos,
+              index: this.state.index,
             })
           }>
-          <Text>{this.state.dato.title + '\n'}</Text>
+          <Text>{this.state.rss.item.title + '\n'}</Text>
         </TouchableOpacity>
       </View>
     );
