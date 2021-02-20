@@ -1,7 +1,9 @@
 import React from 'react';
-import {ScrollView, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {ScrollView, Text, View, TouchableOpacity, FlatList } from 'react-native';
 import {Dimensions} from 'react-native';
-import HTMLView from 'react-native-htmlview';
+// import HTMLView from 'react-native-htmlview';
+import ViewPager from '@react-native-community/viewpager';
+import { WebView } from 'react-native-webview';
 
 const {width, height} = Dimensions.get('window');
 
@@ -15,14 +17,19 @@ class ItemNewList extends React.Component {
   }
   render() {
     return (
-      <ScrollView style={{width: width, minHeight: height}}>
-        {String(this.state.content).length >
-        String(this.state.description).length ? (
-          <HTMLView value={this.state.content} />
-        ) : (
-          <HTMLView value={this.state.description} />
-        )}
-      </ScrollView>
+      <View style={{width: width, height: height, backgroundColor: '#fff'}}>
+        <ScrollView style={{width: width, minHeight: height, flex: 1}}>
+            {/* <HTMLView value={this.state.content} /> */}
+            <WebView
+              originWhitelist={['*']}
+              source={{ html: this.state.content
+                             }}
+              style={{height: height}}
+              contentMode='mobile'
+              textZoom={400}
+            />
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -38,7 +45,21 @@ class New extends React.Component {
   render() {
     return (
       <View>
-        <FlatList
+        <ViewPager initialPage={this.state.index} >
+        
+          {/* <View style={{backgroundColor:'#000', height: height, width: width}}/>
+          <View style={{backgroundColor:'#000', height: height, width: width}}/>
+          <View style={{backgroundColor:'#000', height: height, width: width}}/> */}
+          {
+            this.state.allFeed.map( (item, index)=> <ItemNewList
+              key={index}
+              content={ String(item.content).length > String(item.description).length ? item.content : item.description }
+              index={item.index}
+            />
+            )
+          }
+        </ViewPager>
+        {/* <FlatList
           snapToInterval={width}
           decelerationRate={'fast'}
           horizontal={true}
@@ -47,11 +68,11 @@ class New extends React.Component {
           data={this.state.allFeed}
           renderItem={(item) => (
             <ItemNewList
-              content={item.item.description}
+              content={ String(this.state.content).length > String(this.state.description).length ? item.item.content : item.item.description }
               index={this.state.index}
             />
           )}
-        />
+        /> */}
       </View>
     );
   }

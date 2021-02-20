@@ -7,22 +7,22 @@ class ItemFeedList extends React.Component {
     this.state = {
       allFeed: props.allFeed,
       navigation: props.navigation,
-      title: props.title,
+      // title: props.title,
       index: props.index,
+      // item: props.item
     };
   }
   render() {
-    //console.log(this.state.allFeed);
     return (
       <View>
         <TouchableOpacity
-          onPress={() =>
-            this.state.navigation.navigate('New', {
+          onPress={() => 
+            this.props.navigation.navigate('New', {
               allFeed: this.state.allFeed,
               index: this.state.index,
             })
           }>
-          <Text>{this.state.title + '\n'}</Text>
+          <Text>{this.state.allFeed[this.state.index].title + '\n'}</Text>
         </TouchableOpacity>
       </View>
     );

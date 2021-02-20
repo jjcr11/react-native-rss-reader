@@ -24,6 +24,11 @@ class FeedList extends React.Component {
       navigation: props.navigation,
     };
   }
+
+  componentDidMount() {
+    this.getData();
+  }
+
   getData() {
     json.forEach((link) => {
       fetch(link.link)
@@ -37,21 +42,23 @@ class FeedList extends React.Component {
         });
     });
   }
+  
   render() {
     if (this.state.loading) {
-      this.getData();
       return <Text>CARGANDO</Text>;
     } else {
       return (
-        <View style={{flex: 1, padding: 24}}>
+        <View style={{flex: 1}}>
           <FlatList
             data={this.state.data}
+            contentContainerStyle={{padding: 24}}
             renderItem={(item) => (
               <ItemFeedList
                 allFeed={this.state.data}
-                title={item.item.title}
+                // title={item.item.title}
                 //rss={item}
                 index={item.index}
+                // item={item.item}
                 navigation={this.state.navigation}
                 //datos={this.state.data}
               />
