@@ -25,8 +25,7 @@ class FeedList extends React.Component {
     };
   }
   getData() {
-    json.forEach((link, index) => {
-      console.log(link);
+    json.forEach((link) => {
       fetch(link.link)
         .then((response) => response.text())
         .then((responseData) => rssParser.parse(responseData))
@@ -37,18 +36,6 @@ class FeedList extends React.Component {
           });
         });
     });
-
-    /*
-    fetch('https://kotaku.com/rss')
-      .then((response) => response.text())
-      .then((responseData) => rssParser.parse(responseData))
-      .then((rss) => {
-        this.setState({
-          data: rss.items,
-          loading: false,
-        });
-      });
-      */
   }
   render() {
     if (this.state.loading) {
@@ -61,10 +48,12 @@ class FeedList extends React.Component {
             data={this.state.data}
             renderItem={(item) => (
               <ItemFeedList
-                rss={item}
+                allFeed={this.state.data}
+                title={item.item.title}
+                //rss={item}
                 index={item.index}
                 navigation={this.state.navigation}
-                datos={this.state.data}
+                //datos={this.state.data}
               />
             )}
           />

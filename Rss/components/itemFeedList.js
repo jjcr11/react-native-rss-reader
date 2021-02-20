@@ -5,24 +5,24 @@ class ItemFeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rss: props.rss,
+      allFeed: props.allFeed,
       navigation: props.navigation,
-      datos: props.datos,
+      title: props.title,
       index: props.index,
     };
   }
   render() {
+    //console.log(this.state.allFeed);
     return (
       <View>
         <TouchableOpacity
           onPress={() =>
             this.state.navigation.navigate('New', {
-              rss: this.state.rss,
-              datos: this.state.datos,
+              allFeed: this.state.allFeed,
               index: this.state.index,
             })
           }>
-          <Text>{this.state.rss.item.title + '\n'}</Text>
+          <Text>{this.state.title + '\n'}</Text>
         </TouchableOpacity>
       </View>
     );
