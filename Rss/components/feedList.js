@@ -24,6 +24,11 @@ class FeedList extends React.Component {
       navigation: props.navigation,
     };
   }
+
+  componentDidMount() {
+    this.getData();
+  }
+
   getData() {
     json.forEach((link) => {
       fetch(link.link)
@@ -39,7 +44,6 @@ class FeedList extends React.Component {
   }
   render() {
     if (this.state.loading) {
-      this.getData();
       return <Text>CARGANDO</Text>;
     } else {
       return (

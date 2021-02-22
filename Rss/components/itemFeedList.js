@@ -12,7 +12,6 @@ class ItemFeedList extends React.Component {
     };
   }
   render() {
-    //console.log(this.state.allFeed);
     return (
       <View>
         <TouchableOpacity
