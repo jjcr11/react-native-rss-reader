@@ -9,7 +9,11 @@ class StackNavigator extends React.Component {
   render() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="FeedList" component={FeedList} />
+        <Stack.Screen
+          name="FeedList"
+          component={FeedList}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="New"
           component={New}

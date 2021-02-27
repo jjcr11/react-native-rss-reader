@@ -1,7 +1,12 @@
 import React from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, View, Dimensions} from 'react-native';
 import * as rssParser from 'react-native-rss-parser';
 import ItemFeedList from './itemFeedList';
+import styles from '../styles/feedListStyles';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const json = [
   {
@@ -47,7 +52,22 @@ class FeedList extends React.Component {
       return <Text>CARGANDO</Text>;
     } else {
       return (
-        <View style={{flex: 1, padding: 24}}>
+        <View style={styles.container}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              //backgroundColor: '#bcbabe',
+              marginTop: 20,
+              paddingHorizontal: width - 200,
+              //paddingVertical: height * 0.01,
+              //borderWidth: 1,
+              //paddingHorizontal: width * 0.1,
+              //borderRadius: 4,
+              borderBottomWidth: 1,
+              //paddingLeft: width * 0.25,
+            }}>
+            NEWS
+          </Text>
           <FlatList
             data={this.state.data}
             renderItem={(item) => (

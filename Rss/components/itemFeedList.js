@@ -1,5 +1,8 @@
 import React from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
+import styles from '../styles/itemFeedListStyles';
+import {Card} from 'react-native-elements';
+import colors from '../styles/colors';
 
 class ItemFeedList extends React.Component {
   constructor(props) {
@@ -13,17 +16,19 @@ class ItemFeedList extends React.Component {
   }
   render() {
     return (
-      <View>
-        <TouchableOpacity
-          onPress={() =>
-            this.state.navigation.navigate('New', {
-              allFeed: this.state.allFeed,
-              index: this.state.index,
-            })
-          }>
-          <Text>{this.state.title + '\n'}</Text>
-        </TouchableOpacity>
-      </View>
+      <Card containerStyle={{backgroundColor: colors.white}}>
+        <View>
+          <TouchableOpacity
+            onPress={() =>
+              this.state.navigation.navigate('New', {
+                allFeed: this.state.allFeed,
+                index: this.state.index,
+              })
+            }>
+            <Text style={styles.text}>{this.state.title}</Text>
+          </TouchableOpacity>
+        </View>
+      </Card>
     );
   }
 }

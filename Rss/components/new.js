@@ -23,7 +23,8 @@ class ItemNewList extends React.Component {
     };
   }
   render() {
-    return <WebView source={{html: this.state.content}} />;
+    //console.log(this.state.content);
+    return <WebView source={{html: this.state.content}} textZoom={400} />;
   }
 }
 
@@ -39,11 +40,9 @@ class New extends React.Component {
   }
   previousPage() {
     this.setState({index: this.state.index - 1});
-    console.log(this.state.index);
   }
   nextPage() {
     this.setState({index: this.state.index + 1});
-    console.log(this.state.index);
   }
   render() {
     return (
