@@ -1,8 +1,8 @@
 import React from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/itemFeedListStyles';
 import {Card} from 'react-native-elements';
-import colors from '../styles/colors';
+import moment from 'moment';
 
 class ItemFeedList extends React.Component {
   constructor(props) {
@@ -12,23 +12,38 @@ class ItemFeedList extends React.Component {
       navigation: props.navigation,
       title: props.title,
       index: props.index,
+      date: props.date,
+      hours: 0,
     };
+  }
+  componentDidMount() {
+    const feedDate = moment(this.state.date, 'ddd, D MMM YYYY kk:mm:ss').format(
+      'dddd, D MMM YYYY',
+    );
+
+    const now = moment();
+    this.setState({
+      date: feedDate,
+      hours: now.diff(feedDate, 'hours'),
+    });
   }
   render() {
     return (
-      <Card containerStyle={{backgroundColor: colors.white}}>
-        <View>
-          <TouchableOpacity
-            onPress={() =>
-              this.state.navigation.navigate('New', {
-                allFeed: this.state.allFeed,
-                index: this.state.index,
-              })
-            }>
-            <Text style={styles.text}>{this.state.title}</Text>
-          </TouchableOpacity>
-        </View>
-      </Card>
+      <TouchableOpacity
+        onPress={() =>
+          this.state.navigation.navigate('New', {
+            allFeed: this.state.allFeed,
+            index: this.state.index,
+          })
+        }>
+        <Card containerStyle={styles.card}>
+          <Text style={styles.text}>{this.state.title}</Text>
+          <Card.Divider />
+          <Text style={styles.hoursText}>
+            {this.state.date + ' - ' + this.state.hours + ' Hours ago'}
+          </Text>
+        </Card>
+      </TouchableOpacity>
     );
   }
 }

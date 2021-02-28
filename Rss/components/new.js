@@ -1,32 +1,8 @@
 import React from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  VirtualizedList,
-} from 'react-native';
-import {Dimensions} from 'react-native';
-import HTMLView from 'react-native-htmlview';
-import {SwiperFlatList} from 'react-native-swiper-flatlist';
+import {Text, View, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 const {width, height} = Dimensions.get('window');
-
-class ItemNewList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content: props.content,
-      index2: props.index2,
-    };
-  }
-  render() {
-    //console.log(this.state.content);
-    return <WebView source={{html: this.state.content}} textZoom={400} />;
-  }
-}
 
 class New extends React.Component {
   constructor(props) {
@@ -59,7 +35,7 @@ class New extends React.Component {
           data={this.state.allFeed}
           renderItem={(item) => (
             <View style={{width: width, height: height * 0.7}}>
-              <ItemNewList content={item.item.description} />
+              <WebView source={{html: item.item.description}} textZoom={400} />
               <View
                 style={{
                   backgroundColor: 'red',

@@ -53,27 +53,13 @@ class FeedList extends React.Component {
     } else {
       return (
         <View style={styles.container}>
-          <Text
-            style={{
-              alignSelf: 'center',
-              //backgroundColor: '#bcbabe',
-              marginTop: 20,
-              paddingHorizontal: width - 200,
-              //paddingVertical: height * 0.01,
-              //borderWidth: 1,
-              //paddingHorizontal: width * 0.1,
-              //borderRadius: 4,
-              borderBottomWidth: 1,
-              //paddingLeft: width * 0.25,
-            }}>
-            NEWS
-          </Text>
           <FlatList
             data={this.state.data}
             renderItem={(item) => (
               <ItemFeedList
                 allFeed={this.state.data}
                 title={item.item.title}
+                date={item.item.published}
                 //rss={item}
                 index={item.index}
                 navigation={this.state.navigation}

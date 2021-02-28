@@ -2,17 +2,16 @@ import {StyleSheet} from 'react-native';
 import colors from './colors';
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.white,
+  continer: {
+    backgroundColor: colors.blueHard,
+    borderBottomWidth: 1,
+    borderColor: colors.gray,
   },
   text: {
+    fontSize: 30,
+    alignSelf: 'center',
     fontWeight: 'bold',
-    fontSize: 15,
-  },
-  hoursText: {
-    fontSize: 10,
-    color: colors.gray,
-    fontWeight: 'bold',
+    color: colors.blue,
   },
 });
 
