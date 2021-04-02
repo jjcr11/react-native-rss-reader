@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 
 class Link extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Useless Placeholder',
+      text: '',
     };
   }
   render() {
@@ -14,9 +14,33 @@ class Link extends React.Component {
         <Text>Link:</Text>
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => onChangeText(text)}
-          value={this.state.value}
+          onChangeText={(text) => {
+            this.state.text = text;
+          }}
+          placeholder={'Add link plis'}
         />
+        <TouchableOpacity
+          onPress={() => {
+            const url = 'http://feeds.weblogssl.com/genbeta';
+            var type = 0;
+            var shortUrl = '';
+            const find = this.state.text.search('http://');
+            if (find == -1) {
+              type = 1;
+              shortUrl = this.state.text.substr(8, url.length);
+            } else {
+              shortUrl = this.state.text.substr(7, url.length);
+            }
+            const shortUrl2 = shortUrl.replace('/', '^');
+            const url2 =
+              'http://10.0.0.17:8000/add/' + type + '/' + shortUrl2 + '/';
+
+            fetch(url2).then((res) => consolethis.state.text.log(res));
+
+            //console.log(url2);
+          }}>
+          <Text>tocame</Text>
+        </TouchableOpacity>
       </View>
     );
   }
