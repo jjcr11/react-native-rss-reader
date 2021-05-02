@@ -8,19 +8,21 @@ class ItemFeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allFeed: props.allFeed,
-      navigation: props.navigation,
+      //allFeed: props.allFeed,
+      //navigation: props.navigation,
       title: props.title,
-      index: props.index,
+      //index: props.index,
       date: props.date,
       hours: 0,
     };
   }
   componentDidMount() {
-    const feedDate = moment(this.state.date, 'ddd, D MMM YYYY kk:mm:ss').format(
-      'dddd, D MMM YYYY',
-    );
-
+    //const feedDate = moment(this.state.date, 'ddd, D MMM YYYY kk:mm:ss').format(
+    const feedDate = moment(
+      this.state.date,
+      'YYYY-MM-DDTmm:mm:ssZ',
+      true,
+    ).format('dddd, D MMM YYYY');
     const now = moment();
     this.setState({
       date: feedDate,

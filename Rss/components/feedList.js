@@ -8,18 +8,6 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const json = [
-  {
-    link: 'https://www.mientrastantoenmexico.mx/feed/',
-  },
-  {
-    link: 'https://kotaku.com/rss',
-  },
-  {
-    link: 'http://feeds.weblogssl.com/xatakamx',
-  },
-];
-
 class FeedList extends React.Component {
   constructor(props) {
     super(props);
@@ -35,17 +23,22 @@ class FeedList extends React.Component {
   }
 
   getData() {
-    json.forEach((link) => {
-      fetch(link.link)
-        .then((response) => response.text())
-        .then((responseData) => rssParser.parse(responseData))
-        .then((rss) => {
-          this.setState({
-            data: this.state.data.concat(rss.items),
-            loading: false,
-          });
-        });
-    });
+    fetch('http://192.168.0.16:8000/update/')
+      .then((response) => response.json())
+      .then((data) => {
+        //console.log(data);
+        fetch('http://192.168.0.16:8000/feed/')
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data[0].published);
+            this.setState({
+              loading: false,
+              data: data,
+            });
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
   }
   render() {
     if (this.state.loading) {
@@ -57,15 +50,17 @@ class FeedList extends React.Component {
             data={this.state.data}
             renderItem={(item) => (
               <ItemFeedList
-                allFeed={this.state.data}
+                //allFeed={this.state.data}
                 title={item.item.title}
                 date={item.item.published}
+
                 //rss={item}
-                index={item.index}
-                navigation={this.state.navigation}
+                //index={item.index}
+                //navigation={this.state.navigation}
                 //datos={this.state.data}
               />
             )}
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
       );
