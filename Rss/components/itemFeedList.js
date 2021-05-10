@@ -9,10 +9,12 @@ class ItemFeedList extends React.Component {
     super(props);
     this.state = {
       //allFeed: props.allFeed,
-      //navigation: props.navigation,
+      navigation: props.navigation,
       title: props.title,
       //index: props.index,
       date: props.date,
+      content: props.content,
+      link: props.link,
       hours: 0,
     };
   }
@@ -30,14 +32,18 @@ class ItemFeedList extends React.Component {
     });
   }
   render() {
+    //console.log(this.state.link);
     return (
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
           this.state.navigation.navigate('New', {
-            allFeed: this.state.allFeed,
-            index: this.state.index,
-          })
-        }>
+            content: this.state.content,
+            title: this.state.title,
+            link: this.state.link,
+            //allFeed: this.state.allFeed,
+            //index: this.state.index,
+          });
+        }}>
         <Card containerStyle={styles.card}>
           <Text style={styles.text}>{this.state.title}</Text>
           <Card.Divider />

@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, Text, View, Dimensions} from 'react-native';
-import * as rssParser from 'react-native-rss-parser';
 import ItemFeedList from './itemFeedList';
 import styles from '../styles/feedListStyles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -30,11 +29,11 @@ class FeedList extends React.Component {
         fetch('http://192.168.0.16:8000/feed/')
           .then((response) => response.json())
           .then((data) => {
-            console.log(data[0].published);
             this.setState({
               loading: false,
               data: data,
             });
+            //console.log(data[0]);
           })
           .catch((err) => console.error(err));
       })
@@ -53,10 +52,11 @@ class FeedList extends React.Component {
                 //allFeed={this.state.data}
                 title={item.item.title}
                 date={item.item.published}
-
+                content={item.item.content}
+                link={item.item.link}
                 //rss={item}
                 //index={item.index}
-                //navigation={this.state.navigation}
+                navigation={this.state.navigation}
                 //datos={this.state.data}
               />
             )}
