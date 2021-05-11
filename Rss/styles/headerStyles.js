@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blueHard,
     borderBottomWidth: 1,
     borderColor: colors.gray,
+    height: 50,
   },
   text: {
     fontSize: 30,

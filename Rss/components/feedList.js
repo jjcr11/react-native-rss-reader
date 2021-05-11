@@ -18,10 +18,6 @@ class FeedList extends React.Component {
   }
 
   componentDidMount() {
-    this.getData();
-  }
-
-  getData() {
     fetch('http://192.168.0.16:8000/update/')
       .then((response) => response.json())
       .then((data) => {
@@ -39,6 +35,7 @@ class FeedList extends React.Component {
       })
       .catch((err) => console.error(err));
   }
+
   render() {
     if (this.state.loading) {
       return <Text>CARGANDO</Text>;
@@ -49,15 +46,12 @@ class FeedList extends React.Component {
             data={this.state.data}
             renderItem={(item) => (
               <ItemFeedList
-                //allFeed={this.state.data}
                 title={item.item.title}
                 date={item.item.published}
                 content={item.item.content}
                 link={item.item.link}
-                //rss={item}
-                //index={item.index}
                 navigation={this.state.navigation}
-                //datos={this.state.data}
+                id={item.item.id}
               />
             )}
             keyExtractor={(item) => item.id.toString()}

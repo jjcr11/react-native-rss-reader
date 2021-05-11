@@ -29,9 +29,9 @@ class Link extends React.Component {
             const find = this.state.text.search('http://');
             if (find == -1) {
               type = 1;
-              shortUrl = this.state.text.substr(8, url.length);
+              shortUrl = this.state.text.substr(8, this.state.text.length);
             } else {
-              shortUrl = this.state.text.substr(7, url.length);
+              shortUrl = this.state.text.substr(7, this.state.text.length);
             }
             const shortUrl2 = shortUrl.replace('/', '^');
             const url2 =

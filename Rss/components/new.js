@@ -12,32 +12,77 @@ import {
 } from 'react-native';
 import styles from '../styles/newStyles';
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
 class New extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      data: [],
+      navigation: props.navigation,
+      id: props.route.params.id,
+    };
+  }
+  componentDidMount() {
+    //console.log(data);
+    fetch('http://192.168.0.16:8000/feed/')
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          loading: false,
+          data: data,
+        });
+        //console.log(data[0]);
+      })
+      .catch((err) => console.error(err));
+  }
+  render() {
+    if (this.state.loading) {
+      return <Text>CARGANDO</Text>;
+    } else {
+      //x =
+      return (
+        <View>
+          <FlatList
+            snapToInterval={0}
+            disableIntervalMomentum={true}
+            decelerationRate={'fast'}
+            horizontal={true}
+            contentOffset={{x: width * this.state.id, y: 0}}
+            initialNumToRender={this.state.data.length}
+            data={this.state.data}
+            renderItem={(item) => (
+              <ItemNew
+                content={item.item.content}
+                title={item.item.title}
+                link={item.item.link}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </View>
+      );
+    }
+  }
+}
+
+class ItemNew extends React.Component {
   constructor(props) {
     super(props);
     this.onShare = this.onShare.bind(this);
     this.state = {
-      content: props.route.params.content,
-      title: props.route.params.title,
-      link: props.route.params.link,
+      content: props.content,
+      title: props.title,
+      link: props.link,
     };
   }
   async onShare() {
     try {
       const result = await Share.share({
-        message:
-          //'React Native | A framework for building native apps using React',
-          this.state.link,
+        message: this.state.link,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error) {
       alert(error.message);
     }
@@ -47,7 +92,9 @@ class New extends React.Component {
     var componentes = [];
     this.state.content.forEach((element) => {
       if (element.type === 'text') {
-        componentes.push(<Text style={styles.text}>{element.content}</Text>);
+        if (element.content !== '') {
+          componentes.push(<Text style={styles.text}>{element.content}</Text>);
+        }
       } else if (element.type === 'image') {
         componentes.push(
           <Image
@@ -57,6 +104,18 @@ class New extends React.Component {
             }}
           />,
         );
+      } else if (element.type === 'h1') {
+        componentes.push(<Text style={{fontSize: 25}}>{element.content}</Text>);
+      } else if (element.type === 'h2') {
+        componentes.push(<Text style={{fontSize: 23}}>{element.content}</Text>);
+      } else if (element.type === 'h3') {
+        componentes.push(<Text style={{fontSize: 21}}>{element.content}</Text>);
+      } else if (element.type === 'h4') {
+        componentes.push(<Text style={{fontSize: 19}}>{element.content}</Text>);
+      } else if (element.type === 'h5') {
+        componentes.push(<Text style={{fontSize: 17}}>{element.content}</Text>);
+      } else if (element.type === 'h6') {
+        componentes.push(<Text style={{fontSize: 15}}>{element.content}</Text>);
       } else {
         componentes.push(
           <Text>
@@ -72,7 +131,7 @@ class New extends React.Component {
       }
     });
     return (
-      <ScrollView>
+      <ScrollView style={{width: width}}>
         <Text style={styles.title}>{this.state.title}</Text>
         <View style={styles.mainContiner}>{componentes}</View>
         <View style={styles.buttonsContiner}>
@@ -92,59 +151,4 @@ class New extends React.Component {
   }
 }
 
-/*
-const {width, height} = Dimensions.get('window');
-
-class New extends React.Component {
-  constructor(props) {
-    super(props);
-    this.nextPage = this.nextPage.bind(this);
-    this.previousPage = this.previousPage.bind(this);
-    this.state = {
-      allFeed: props.route.params.allFeed,
-      index: props.route.params.index,
-    };
-  }
-  previousPage() {
-    this.setState({index: this.state.index - 1});
-  }
-  nextPage() {
-    this.setState({index: this.state.index + 1});
-  }
-  render() {
-    return (
-      <View>
-        <FlatList
-          snapToInterval={0}
-          disableIntervalMomentum={true}
-          scroll
-          decelerationRate={'fast'}
-          scrollEnabled={false}
-          horizontal={true}
-          contentOffset={{x: width * this.state.index, y: 0}}
-          initialNumToRender={this.state.allFeed.length}
-          data={this.state.allFeed}
-          renderItem={(item) => (
-            <View style={{width: width, height: height * 0.7}}>
-              <View
-                style={{
-                  backgroundColor: 'red',
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                }}>
-                <TouchableOpacity onPress={this.previousPage}>
-                  <Text>Previus page</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.nextPage}>
-                  <Text>Next page</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        />
-      </View>
-    );
-  }
-}
-*/
 export default New;

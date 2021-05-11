@@ -8,18 +8,16 @@ class ItemFeedList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //allFeed: props.allFeed,
       navigation: props.navigation,
       title: props.title,
-      //index: props.index,
       date: props.date,
       content: props.content,
       link: props.link,
+      id: props.id,
       hours: 0,
     };
   }
   componentDidMount() {
-    //const feedDate = moment(this.state.date, 'ddd, D MMM YYYY kk:mm:ss').format(
     const feedDate = moment(
       this.state.date,
       'YYYY-MM-DDTmm:mm:ssZ',
@@ -32,16 +30,14 @@ class ItemFeedList extends React.Component {
     });
   }
   render() {
-    //console.log(this.state.link);
     return (
       <TouchableOpacity
         onPress={() => {
           this.state.navigation.navigate('New', {
-            content: this.state.content,
-            title: this.state.title,
-            link: this.state.link,
-            //allFeed: this.state.allFeed,
-            //index: this.state.index,
+            //content: this.state.content,
+            //title: this.state.title,
+            //link: this.state.link,
+            id: this.state.id,
           });
         }}>
         <Card containerStyle={styles.card}>
